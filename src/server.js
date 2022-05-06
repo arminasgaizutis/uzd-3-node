@@ -78,4 +78,17 @@ app.get('/totalproducts', async (req, res) => {
   }
 });
 
+app.delete('/products/:id', async (req, res) => {
+  try {
+    const connection = await mysql.createConnection(dbConfig);
+    const sql = `DELETE FROM products WHERE id = ${req.params.id} `;
+    const [rows] = await connection.execute(sql);
+    await connection.close();
+    res.json(rows);
+  } catch (error) {
+    console.log('OOPS, something went wrong /delete', error);
+    res.status(500).send('Something went wrong there, buddy');
+  }
+});
+
 app.listen(PORT, console.log(`Server is running on port ${PORT}`));
