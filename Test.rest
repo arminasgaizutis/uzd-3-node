@@ -9,3 +9,6 @@ Content-Type: application/json
 "title": "Slyviniai pomidorai (57-67 mm), 1 kg", "description": "Slyviniai pomidorai (1 kl.) savo forma ir dydžiu primena slyvas, jų minkštimas yra mėsingas ir su mažai sėklelių.",
 "price": 2.39
 }
+###
+GET http://localhost:8000/totalproducts
+###

@@ -29,7 +29,6 @@ app.get('/test', async (req, res) => {
 app.get('/products', async (req, res) => {
   try {
     const connection = await mysql.createConnection(dbConfig);
-    console.log('Connected to DB');
     const sql = 'SELECT * FROM products';
     const [rows] = await connection.execute(sql);
     await connection.close();
@@ -62,6 +61,19 @@ app.post('/products', async (req, res) => {
     res.json({ rows, fields });
   } catch (error) {
     console.log('OOPS, something went wrong /POST', error);
+    res.status(500).send('Something went wrong there, buddy');
+  }
+});
+
+app.get('/totalproducts', async (req, res) => {
+  try {
+    const connection = await mysql.createConnection(dbConfig);
+    const sql = 'SELECT COUNT(id) AS TotalProducts FROM products';
+    const [rows] = await connection.execute(sql);
+    await connection.close();
+    res.json(rows);
+  } catch (error) {
+    console.log('OOPS, something went wrong /GET total', error);
     res.status(500).send('Something went wrong there, buddy');
   }
 });
