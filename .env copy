@@ -3,6 +3,6 @@ DB_USER=your data
 DB_PASSWORD=your data
 DB_DB=your data
 
-SERVER_PORT = your server port
+PORT = your server port
 
 
