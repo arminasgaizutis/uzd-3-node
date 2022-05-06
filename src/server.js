@@ -35,7 +35,33 @@ app.get('/products', async (req, res) => {
     await connection.close();
     res.json(rows);
   } catch (error) {
-    console.log('OOPS, something went wrong', error);
+    console.log('OOPS, something went wrong /GET', error);
+    res.status(500).send('Something went wrong there, buddy');
+  }
+});
+
+app.post('/products', async (req, res) => {
+  try {
+    const connection = await mysql.createConnection(dbConfig);
+    const sql = `
+      INSERT INTO products (id, image_url, title, description, price) VALUES 
+  (?, ?, ?, ?, ?)`;
+    const idEl = req.body.id;
+    const imageEl = req.body.image_url;
+    const titleEl = req.body.title;
+    const descriptionEl = req.body.description;
+    const priceEl = req.body.price;
+    const [rows, fields] = await connection.execute(sql, [
+      idEl,
+      imageEl,
+      titleEl,
+      descriptionEl,
+      priceEl,
+    ]);
+    await connection.close();
+    res.json({ rows, fields });
+  } catch (error) {
+    console.log('OOPS, something went wrong /POST', error);
     res.status(500).send('Something went wrong there, buddy');
   }
 });
